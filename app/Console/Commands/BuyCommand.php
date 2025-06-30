@@ -60,22 +60,28 @@ echo "Total coins returned: " . count($allData) . "\n";
                 ]);
 
                 // Update portfolio
-                $portfolio = Portfolio::firstOrNew([
-                    'user_id' => $user->id,
-                    'coin_id' => $coinModel->id
-                ]);
+                $portfolio = Portfolio::where('user_id', $user->id)
+                    ->where('coin_id', $coinModel->id)
+                    ->first();
 
-                if ($portfolio->exists) {
-                    $totalAmount = $portfolio->amount + $amount;
-                    $totalValue = ($portfolio->average_buy_price * $portfolio->amount) + 5;
-                    $portfolio->average_buy_price = $totalValue / $totalAmount;
-                    $portfolio->amount = $totalAmount;
-                } else {
-                    $portfolio->amount = $amount;
-                    $portfolio->average_buy_price = $currentPrice;
-                }
+if ($portfolio) {
+    // Update with weighted average
+    $totalAmount = $portfolio->amount + $amount;
+    $totalValue = ($portfolio->average_buy_price * $portfolio->amount) + 5;
 
-                $portfolio->save();
+    $portfolio->amount = $totalAmount;
+    $portfolio->average_buy_price = $totalValue / $totalAmount;
+} else {
+    // First-time buy
+    $portfolio = new Portfolio();
+    $portfolio->user_id = $user->id;
+    $portfolio->coin_id = $coinModel->id;
+    $portfolio->amount = $amount;
+    $portfolio->average_buy_price = $currentPrice;
+}
+
+$portfolio->save();
+
                 print($changePercentage . " " . $coin['id'] . "\n");
 
                 $purchases[] = [
