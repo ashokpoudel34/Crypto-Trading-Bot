@@ -18,7 +18,13 @@ class BuyCommand extends Command
 public function handle(CoinGeckoService $coingecko)
 {
     $coins = Coin::all(); // DB model
-    $users = User::all();
+    $users = User::where('auto_trade_enabled', true)->get();
+
+    if ($users->isEmpty()) {
+        $this->info('No users with auto-trading enabled');
+    return 0; // Exit code for success
+    }
+    
 
 $coinIds = $coins->pluck('coin_id')->toArray(); // 283 CoinGecko IDs
 echo "Total coins sent: " . count($coinIds) . "\n";

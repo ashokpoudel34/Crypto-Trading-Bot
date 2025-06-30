@@ -18,7 +18,11 @@ class SellCommand extends Command
     public function handle(CoinGeckoService $coingecko)
     {
         $portfolios = Portfolio::with('coin', 'user')->get();
-        $users = User::all();
+        $users = User::where('auto_trade_enabled', true)->get();
+        if ($users->isEmpty()) {
+            $this->info('No users with auto-trading enabled');
+        return 0; // Exit code for success
+        }
 
         // Collect unique CoinGecko IDs from portfolios
         $coinIds = $portfolios->pluck('coin.coin_id')->unique()->values()->toArray();

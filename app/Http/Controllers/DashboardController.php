@@ -44,4 +44,14 @@ public function index(CoinGeckoService $coingecko)
     return view('dashboard', compact('transactions', 'portfolio', 'totalValue', 'totalUnRealizedPnl', 'totalRealizedPnl'));
 }
 
+public function toggleAutoTrade(Request $request)
+{
+    $user = auth()->user();
+    $user->auto_trade_enabled = $request->has('auto_trade_enabled');
+    $user->save();
+
+    return back();
+}
+
+
 }

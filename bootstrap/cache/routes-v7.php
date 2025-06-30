@@ -33,7 +33,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Gwew0tJSe0TEa9ik',
+            '_route' => 'generated::2ptavfvCGmazhU1S',
           ),
           1 => NULL,
           2 => 
@@ -53,7 +53,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::QImxqYEpPgfIoFun',
+            '_route' => 'generated::mikHiL4hbglozDZj',
           ),
           1 => NULL,
           2 => 
@@ -80,6 +80,25 @@ app('router')->setCompiledRoutes(
           array (
             'GET' => 0,
             'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/user/toggle-auto-trade' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'user.toggleAutoTrade',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
           ),
           3 => NULL,
           4 => false,
@@ -162,7 +181,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Pn6yLS68qcb6s1hB',
+            '_route' => 'generated::ueUhEMGI9am7Aq8o',
           ),
           1 => NULL,
           2 => 
@@ -198,7 +217,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::vtzrW7loV82A6qem',
+            '_route' => 'generated::vVYCYiIMyyfXoP5g',
           ),
           1 => NULL,
           2 => 
@@ -328,7 +347,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::2CEjplBzqCYYdVEb',
+            '_route' => 'generated::fHKwxR7zRRdFUVsN',
           ),
           1 => NULL,
           2 => 
@@ -508,7 +527,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Gwew0tJSe0TEa9ik' => 
+    'generated::2ptavfvCGmazhU1S' => 
     array (
       'methods' => 
       array (
@@ -537,7 +556,7 @@ app('router')->setCompiledRoutes(
                         \'exception\' => $exception,
                     ]), status: $exception ? 500 : 200);
                 }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"00000000000004f00000000000000000";}}',
-        'as' => 'generated::Gwew0tJSe0TEa9ik',
+        'as' => 'generated::2ptavfvCGmazhU1S',
       ),
       'fallback' => false,
       'defaults' => 
@@ -553,7 +572,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::QImxqYEpPgfIoFun' => 
+    'generated::mikHiL4hbglozDZj' => 
     array (
       'methods' => 
       array (
@@ -575,7 +594,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::QImxqYEpPgfIoFun',
+        'as' => 'generated::mikHiL4hbglozDZj',
       ),
       'fallback' => false,
       'defaults' => 
@@ -614,6 +633,43 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'dashboard',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'user.toggleAutoTrade' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'user/toggle-auto-trade',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\DashboardController@toggleAutoTrade',
+        'controller' => 'App\\Http\\Controllers\\DashboardController@toggleAutoTrade',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'user.toggleAutoTrade',
       ),
       'fallback' => false,
       'defaults' => 
@@ -779,7 +835,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Pn6yLS68qcb6s1hB' => 
+    'generated::ueUhEMGI9am7Aq8o' => 
     array (
       'methods' => 
       array (
@@ -800,7 +856,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::Pn6yLS68qcb6s1hB',
+        'as' => 'generated::ueUhEMGI9am7Aq8o',
       ),
       'fallback' => false,
       'defaults' => 
@@ -854,7 +910,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::vtzrW7loV82A6qem' => 
+    'generated::vVYCYiIMyyfXoP5g' => 
     array (
       'methods' => 
       array (
@@ -875,7 +931,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::vtzrW7loV82A6qem',
+        'as' => 'generated::vVYCYiIMyyfXoP5g',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1195,7 +1251,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::2CEjplBzqCYYdVEb' => 
+    'generated::fHKwxR7zRRdFUVsN' => 
     array (
       'methods' => 
       array (
@@ -1216,7 +1272,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::2CEjplBzqCYYdVEb',
+        'as' => 'generated::fHKwxR7zRRdFUVsN',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1322,7 +1378,7 @@ app('router')->setCompiledRoutes(
                         $config,
                         $isProduction
                     ))($request, $path);
-                }";s:5:"scope";s:47:"Illuminate\\Filesystem\\FilesystemServiceProvider";s:4:"this";N;s:4:"self";s:32:"00000000000004f60000000000000000";}}',
+                }";s:5:"scope";s:47:"Illuminate\\Filesystem\\FilesystemServiceProvider";s:4:"this";N;s:4:"self";s:32:"00000000000004f70000000000000000";}}',
         'as' => 'storage.local',
       ),
       'fallback' => false,
