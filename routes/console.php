@@ -10,7 +10,7 @@ Artisan::command('inspire', function () {
 
 Schedule::command('trading:buy')
     //->cron('0 9 */3 * *') // Every 3 days at 09:00
-    ->everyMinute()
+    ->everyFiveMinutes()
     ->timezone(config('app.timezone'))
     ->description('Buy coins with 5% dip');
 
