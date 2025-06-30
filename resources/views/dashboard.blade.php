@@ -56,36 +56,45 @@
 </div>
 
 
-            {{-- Holdings --}}
-            <h4 class="text-lg font-semibold mb-3">Your Holdings</h4>
-            <div class="overflow-x-auto mb-6">
-                <table class="min-w-full divide-y divide-gray-200 text-sm">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-4 py-2 text-left font-semibold">Coin</th>
-                            <th class="px-4 py-2 text-left font-semibold">Amount</th>
-                            <th class="px-4 py-2 text-left font-semibold">Avg Buy Price</th>
-                            <th class="px-4 py-2 text-left font-semibold">Current Price</th>
-                            <th class="px-4 py-2 text-left font-semibold">Value</th>
-                            <th class="px-4 py-2 text-left font-semibold">P/L</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($portfolio as $item)
-                            <tr>
-                                <td class="px-4 py-2">{{ $item->coin->name }} ({{ $item->coin->symbol }})</td>
-                                <td class="px-4 py-2">{{ number_format($item->amount, 4) }}</td>
-                                <td class="px-4 py-2">${{ number_format($item->average_buy_price, 6) }}</td>
-                                <td class="px-4 py-2">${{ number_format($item->current_price, 6) }}</td>
-                                <td class="px-4 py-2">${{ number_format($item->current_value, 2) }}</td>
-                                <td class="px-4 py-2 @if($item->profit_loss >= 0) text-green-600 @else text-red-600 @endif">
-                                    ${{ number_format($item->profit_loss, 2) }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+{{-- Holdings --}}
+<h4 class="text-lg font-semibold mb-3">Your Holdings</h4>
+<div class="overflow-x-auto mb-6">
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-4 py-2 text-left font-semibold">Coin</th>
+                <th class="px-4 py-2 text-left font-semibold">Amount</th>
+                <th class="px-4 py-2 text-left font-semibold">Avg Buy Price</th>
+                <th class="px-4 py-2 text-left font-semibold">Current Price</th>
+                <th class="px-4 py-2 text-left font-semibold">Value</th>
+                <th class="px-4 py-2 text-left font-semibold">P/L</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            @foreach($portfolio as $item)
+                <tr>
+                    <td class="px-4 py-2">{{ $item->coin->name }} ({{ $item->coin->symbol }})</td>
+                    <td class="px-4 py-2">{{ number_format($item->amount, 4) }}</td>
+                    <td class="px-4 py-2">${{ number_format($item->average_buy_price, 6) }}</td>
+                    <td class="px-4 py-2">${{ number_format($item->current_price, 6) }}</td>
+                    <td class="px-4 py-2">${{ number_format($item->current_value, 2) }}</td>
+                    <td class="px-4 py-2 @if($item->profit_loss >= 0) text-green-600 @else text-red-600 @endif">
+                        <div class="flex items-center justify-between space-x-2">
+                            <span>${{ number_format($item->profit_loss, 2) }}</span>
+                            <form method="POST" action="{{ route('user.sell', $item->coin->id) }}">
+                                @csrf
+                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition">
+                                    Sell Now
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
 
             {{-- Recent Transactions --}}
             <h4 class="text-lg font-semibold mb-3">Recent Transactions</h4>

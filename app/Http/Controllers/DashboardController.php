@@ -53,5 +53,56 @@ public function toggleAutoTrade(Request $request)
     return back();
 }
 
+public function sell($coinId)
+{
+    $userId = auth()->id();
+
+    // Get the user's portfolio entry
+    $holding = Portfolio::where('user_id', $userId)
+        ->where('coin_id', $coinId)
+        ->with('coin')
+        ->first();
+
+    if (!$holding || $holding->amount <= 0) {
+        return redirect()->back()->with('status', 'No holdings to sell.');
+    }
+
+    // Fetch current price
+    $coinIdApi = $holding->coin->coin_id;
+    $coinGecko = app(\App\Services\CoinGeckoService::class);
+    $prices = $coinGecko->getPrices([$coinIdApi]);
+    $currentPrice = $prices[$coinIdApi] ?? null;
+
+    if (!$currentPrice) {
+        return redirect()->back()->with('status', 'Unable to fetch current price.');
+    }
+
+    // Calculate values
+    $soldAmount = $holding->amount;
+    $valueUsd = $soldAmount * $currentPrice;
+    $averageBuyPrice = $holding->average_buy_price;
+    $realizedPnl = ($currentPrice - $averageBuyPrice) * $soldAmount;
+
+    // Create transaction
+    Transaction::create([
+        'user_id' => $userId,
+        'coin_id' => $coinId,
+        'amount' => $soldAmount,
+        'price' => $currentPrice,
+        'value_usd' => $valueUsd,
+        'type' => 'sell',
+    ]);
+
+        $profitRow = RealizedPnl::firstOrNew(['user_id' => $userId]);
+        $profitRow->total_realized_pnl += $realizedPnl;
+        $profitRow->save();
+
+    // Remove holding
+    $holding->delete();
+
+    return redirect()->back();
+}
+
+
 
 }

@@ -13,6 +13,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/user/toggle-auto-trade', [DashboardController::class, 'toggleAutoTrade'])->name('user.toggleAutoTrade')->middleware('auth');
+Route::post('/sell/{coin}', [DashboardController::class, 'sell'])->name('user.sell');
 
 
 Route::middleware('auth')->group(function () {
