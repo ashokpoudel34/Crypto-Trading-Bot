@@ -38,7 +38,11 @@ echo "Total coins returned: " . count($allData) . "\n";
         $purchases = [];
         foreach ($allData as $coin) {
             $changePercentage = $coin['price_change_percentage_7d_in_currency'];
+            if (!is_numeric($changePercentage)) {
+            continue;
+            }
             $currentPrice = $coin['current_price'];
+
             if ($changePercentage <= -5) {
                 // Match CoinGecko ID to DB ID
                 $coinModel = $coins->firstWhere('coin_id', $coin['id']);
