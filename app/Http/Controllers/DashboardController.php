@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Portfolio;
+use App\Models\RealizedPnl;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Services\CoinGeckoService;
@@ -34,9 +35,13 @@ public function index(CoinGeckoService $coingecko)
     });
 
     $totalValue = $portfolio->sum('current_value');
-    $totalProfitLoss = $portfolio->sum('profit_loss');
+    $totalUnRealizedPnl = $portfolio->sum('profit_loss');
 
-    return view('dashboard', compact('transactions', 'portfolio', 'totalValue', 'totalProfitLoss'));
+    $realizedPnl = RealizedPnl::where('user_id', auth()->id())->first();
+
+    $totalRealizedPnl = $realizedPnl?->total_realized_pnl ?? 0;
+
+    return view('dashboard', compact('transactions', 'portfolio', 'totalValue', 'totalUnRealizedPnl', 'totalRealizedPnl'));
 }
 
 }

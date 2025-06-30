@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use App\Models\Portfolio;
+use App\Models\RealizedPnl;
 use App\Models\Transaction;
 use App\Notifications\CoinSold;
 use Illuminate\Console\Command;
@@ -51,26 +52,36 @@ class SellCommand extends Command
 
         if ($changePercentage >= 10 || $portfolio->amount > 0) {
             // Sell $10 worth or remaining amount
-            $amountToSell = min(10 / $currentPrice, $portfolio->amount);
-            $valueUsd = $amountToSell * $currentPrice;
+$amountToSell = min(10 / $currentPrice, $portfolio->amount);
+$valueUsd = $amountToSell * $currentPrice;
 
-            // Create transaction
-            Transaction::create([
-                'user_id' => $user->id,
-                'coin_id' => $portfolio->coin_id,
-                'type' => 'sell',
-                'amount' => $amountToSell,
-                'price' => $currentPrice,
-                'value_usd' => $valueUsd
-            ]);
+// Calculate realized PnL
+$costBasis = $amountToSell * $portfolio->average_buy_price;
+$realizedProfit = $valueUsd - $costBasis;
 
-            // Update or delete portfolio
-            $portfolio->amount -= $amountToSell;
-            if ($portfolio->amount <= 0) {
-                $portfolio->delete();
-            } else {
-                $portfolio->save();
-            }
+// Save transaction
+Transaction::create([
+    'user_id' => $user->id,
+    'coin_id' => $portfolio->coin_id,
+    'type' => 'sell',
+    'amount' => $amountToSell,
+    'price' => $currentPrice,
+    'value_usd' => $valueUsd
+]);
+
+// Update or delete portfolio
+$portfolio->amount -= $amountToSell;
+if ($portfolio->amount <= 0) {
+    $portfolio->delete();
+} else {
+    $portfolio->save();
+}
+
+// Update or insert into realized_profits table
+$profitRow = RealizedPnl::firstOrNew(['user_id' => $user->id]);
+$profitRow->total_realized_pnl += $realizedProfit;
+$profitRow->save();
+
 
             $solddata[] = [
                 'name' => $market['name'],

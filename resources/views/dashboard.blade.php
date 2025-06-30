@@ -17,20 +17,27 @@
                 </div>
             @endif
 
-            {{-- Portfolio Summary --}}
-            <h4 class="text-lg font-semibold mb-3">Portfolio Summary</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div class="bg-gray-100 p-4 rounded-lg shadow">
-                    <h5 class="font-medium">Total Value</h5>
-                    <p class="text-xl">${{ number_format($totalValue, 2) }}</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg shadow">
-                    <h5 class="font-medium">Profit/Loss</h5>
-                    <p class="text-xl @if($totalProfitLoss >= 0) text-green-600 @else text-red-600 @endif">
-                        ${{ number_format($totalProfitLoss, 2) }}
-                    </p>
-                </div>
-            </div>
+{{-- Portfolio Summary --}}
+<h4 class="text-lg font-semibold mb-3">Portfolio Summary</h4>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <div class="bg-gray-100 p-4 rounded-lg shadow">
+        <h5 class="font-medium">Total Value</h5>
+        <p class="text-xl">${{ number_format($totalValue, 2) }}</p>
+    </div>
+    <div class="bg-gray-100 p-4 rounded-lg shadow">
+        <h5 class="font-medium">Unrealized P/L</h5>
+        <p class="text-xl @if($totalUnRealizedPnl >= 0) text-green-600 @else text-red-600 @endif">
+            ${{ number_format($totalUnRealizedPnl, 6) }}
+        </p>
+    </div>
+    <div class="bg-gray-100 p-4 rounded-lg shadow">
+        <h5 class="font-medium">Realized P/L</h5>
+        <p class="text-xl @if($totalRealizedPnl >= 0) text-green-600 @else text-red-600 @endif">
+            ${{ number_format($totalRealizedPnl, 6) }}
+        </p>
+    </div>
+</div>
+
 
             {{-- Holdings --}}
             <h4 class="text-lg font-semibold mb-3">Your Holdings</h4>

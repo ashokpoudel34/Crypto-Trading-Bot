@@ -67,7 +67,7 @@ public function handle()
 
             $this->info("Processed page $page");
             $page++;
-            sleep(2); // delay between requests to avoid hitting the limit
+            sleep(0.1); // delay between requests to avoid hitting the limit
         } catch (\Exception $e) {
             $this->error("Exception on page $page: " . $e->getMessage());
             sleep(60); // fallback delay
