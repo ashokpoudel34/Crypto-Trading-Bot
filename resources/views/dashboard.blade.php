@@ -83,7 +83,7 @@
                             <span>${{ number_format($item->profit_loss, 2) }}</span>
                             <form method="POST" action="{{ route('user.sell', $item->coin->id) }}">
                                 @csrf
-                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition">
+                                <button type="submit" class="px-2 py-1 rounded text-xs text-white transition {{ $item->profit_loss >= 0 ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600' }}">
                                     Sell Now
                                 </button>
                             </form>
