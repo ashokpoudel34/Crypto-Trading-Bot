@@ -9,8 +9,8 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('trading:buy')
-    //->cron('0 9 */3 * *') // Every 3 days at 09:00
-    ->everyFiveMinutes()
+    ->cron('0 9 */3 * *') // Every 3 days at 09:00
+   // ->everyFiveMinutes()
     ->timezone(config('app.timezone'))
     ->description('Buy coins with 5% dip');
 
