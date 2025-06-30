@@ -58,7 +58,7 @@ public function handle()
         $this->info("Processed page $page");
 
         $page++;
-        sleep(1);
+        sleep(2);
     }
 
     // Delete coins not in the current high-volume list
