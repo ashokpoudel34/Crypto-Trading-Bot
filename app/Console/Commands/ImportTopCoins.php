@@ -19,49 +19,60 @@ public function handle()
     $validCoinIds = [];
 
     while (true) {
-        $response = Http::get('https://api.coingecko.com/api/v3/coins/markets', [
-            'vs_currency' => 'usd',
-            'order' => 'market_cap_desc',
-            'per_page' => 250,
-            'page' => $page,
-            'sparkline' => false,
-            'price_change_percentage' => '7d',
-        ]);
+        try {
+            $response = Http::get('https://api.coingecko.com/api/v3/coins/markets', [
+                'vs_currency' => 'usd',
+                'order' => 'market_cap_desc',
+                'per_page' => 250,
+                'page' => $page,
+                'sparkline' => false,
+                'price_change_percentage' => '7d',
+            ]);
 
-        if ($response->failed()) {
-            $this->error("Failed to fetch data from page $page.");
-            break;
-        }
-
-        $coins = $response->json();
-
-        if (empty($coins)) {
-            break;
-        }
-
-        foreach ($coins as $coin) {
-            if (($coin['total_volume'] ?? 0) < 10000000 || ($coin['market_cap'] ?? 0) < 80000000 )  {
-                continue;
+            // Handle rate limit
+            if ($response->status() === 429) {
+                $this->warn("Rate limit hit on page $page. Waiting 60 seconds...");
+                sleep(60);
+                continue; // retry the same page
             }
 
-            Coin::updateOrCreate(
-                ['coin_id' => $coin['id']],
-                [
-                    'symbol' => $coin['symbol'],
-                    'name'   => $coin['name']
-                ]
-            );
+            if ($response->failed()) {
+                $this->error("Failed to fetch data from page $page. HTTP Status: " . $response->status());
+                break;
+            }
 
-            $validCoinIds[] = $coin['id']; // Add to keep list
+            $coins = $response->json();
+
+            if (empty($coins)) {
+                break;
+            }
+
+            foreach ($coins as $coin) {
+                if (($coin['total_volume'] ?? 0) < 10000000 || ($coin['market_cap'] ?? 0) < 80000000) {
+                    continue;
+                }
+
+                Coin::updateOrCreate(
+                    ['coin_id' => $coin['id']],
+                    [
+                        'symbol' => $coin['symbol'],
+                        'name'   => $coin['name']
+                    ]
+                );
+
+                $validCoinIds[] = $coin['id'];
+            }
+
+            $this->info("Processed page $page");
+            $page++;
+            //sleep(6); // delay between requests to avoid hitting the limit
+        } catch (\Exception $e) {
+            $this->error("Exception on page $page: " . $e->getMessage());
+            sleep(60); // fallback delay
         }
-
-        $this->info("Processed page $page");
-
-        $page++;
-        sleep(6);
     }
 
-    // Delete coins not in the current high-volume list
+    // Delete coins not in the current list
     $deleted = Coin::whereNotIn('coin_id', $validCoinIds)->delete();
     $this->info("Deleted $deleted low-volume coins.");
 
