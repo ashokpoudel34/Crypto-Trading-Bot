@@ -49,7 +49,7 @@ class SellCommand extends Command
         $changePercentage = $market['price_change_percentage_7d_in_currency'];
         $currentPrice = $market['current_price'];
 
-        if ($changePercentage >= 10 || $portfolio->amount > 0) {
+        if ($changePercentage >= 10 && $portfolio->amount > 0) {
             // Sell $10 worth or remaining amount
             $amountToSell = min(10 / $currentPrice, $portfolio->amount);
             $valueUsd = $amountToSell * $currentPrice;
