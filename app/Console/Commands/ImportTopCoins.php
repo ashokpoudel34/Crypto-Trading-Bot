@@ -21,7 +21,7 @@ public function handle()
     while (true) {
         try {
         $response = Http::withHeaders([
-            'x-cg-pro-api-key' => env('COINGECKO_API_KEY'), // <-- set in your .env
+            'x-cg-demo-api-key' => env('COINGECKO_API_KEY'), // <-- set in your .env
                 ])->get('https://api.coingecko.com/api/v3/coins/markets', [
             'vs_currency' => 'usd',
             'order' => 'market_cap_desc',
