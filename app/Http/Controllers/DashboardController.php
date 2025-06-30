@@ -55,7 +55,8 @@ public function toggleAutoTrade(Request $request)
 
 public function sell($coinId)
 {
-    $userId = auth()->id();
+    $user = auth()->user();
+    $userId = $user->id;
 
     // Get the user's portfolio entry
     $holding = Portfolio::where('user_id', $userId)
@@ -92,6 +93,8 @@ public function sell($coinId)
         'value_usd' => $valueUsd,
         'type' => 'sell',
     ]);
+        $user->balance += $valueUsd;
+        $user->save();
 
         $profitRow = RealizedPnl::firstOrNew(['user_id' => $userId]);
         $profitRow->total_realized_pnl += $realizedPnl;

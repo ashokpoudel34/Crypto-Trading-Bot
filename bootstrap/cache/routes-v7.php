@@ -33,7 +33,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::YYjLOVvQBv9gByqs',
+            '_route' => 'generated::SrDkmQ5X5mUgANg9',
           ),
           1 => NULL,
           2 => 
@@ -53,7 +53,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::f9Gd6OE2P3XL0eLW',
+            '_route' => 'generated::Gabd9sWFooAm5afx',
           ),
           1 => NULL,
           2 => 
@@ -94,6 +94,45 @@ app('router')->setCompiledRoutes(
           0 => 
           array (
             '_route' => 'user.toggleAutoTrade',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/wallet' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'wallet.show',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/wallet/reload' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'wallet.reload',
           ),
           1 => NULL,
           2 => 
@@ -181,7 +220,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::uxdRakAzTJ0ptfxR',
+            '_route' => 'generated::21K3A4NohsO4Wt0i',
           ),
           1 => NULL,
           2 => 
@@ -217,7 +256,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::hvLl0E4DRmXl3yAT',
+            '_route' => 'generated::rfo9JKL5ilskhaQH',
           ),
           1 => NULL,
           2 => 
@@ -347,7 +386,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::oVdsCpjpHWIZYiMO',
+            '_route' => 'generated::Ws9Ld092VNSB23Aa',
           ),
           1 => NULL,
           2 => 
@@ -549,7 +588,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::YYjLOVvQBv9gByqs' => 
+    'generated::SrDkmQ5X5mUgANg9' => 
     array (
       'methods' => 
       array (
@@ -578,7 +617,7 @@ app('router')->setCompiledRoutes(
                         \'exception\' => $exception,
                     ]), status: $exception ? 500 : 200);
                 }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"00000000000004f00000000000000000";}}',
-        'as' => 'generated::YYjLOVvQBv9gByqs',
+        'as' => 'generated::SrDkmQ5X5mUgANg9',
       ),
       'fallback' => false,
       'defaults' => 
@@ -594,7 +633,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::f9Gd6OE2P3XL0eLW' => 
+    'generated::Gabd9sWFooAm5afx' => 
     array (
       'methods' => 
       array (
@@ -616,7 +655,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::f9Gd6OE2P3XL0eLW',
+        'as' => 'generated::Gabd9sWFooAm5afx',
       ),
       'fallback' => false,
       'defaults' => 
@@ -728,6 +767,81 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'user.sell',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'wallet.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'wallet',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\WalletController@show',
+        'controller' => 'App\\Http\\Controllers\\WalletController@show',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'wallet.show',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'wallet.reload' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'wallet/reload',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\WalletController@reload',
+        'controller' => 'App\\Http\\Controllers\\WalletController@reload',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'wallet.reload',
       ),
       'fallback' => false,
       'defaults' => 
@@ -893,7 +1007,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::uxdRakAzTJ0ptfxR' => 
+    'generated::21K3A4NohsO4Wt0i' => 
     array (
       'methods' => 
       array (
@@ -914,7 +1028,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::uxdRakAzTJ0ptfxR',
+        'as' => 'generated::21K3A4NohsO4Wt0i',
       ),
       'fallback' => false,
       'defaults' => 
@@ -968,7 +1082,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::hvLl0E4DRmXl3yAT' => 
+    'generated::rfo9JKL5ilskhaQH' => 
     array (
       'methods' => 
       array (
@@ -989,7 +1103,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::hvLl0E4DRmXl3yAT',
+        'as' => 'generated::rfo9JKL5ilskhaQH',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1309,7 +1423,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::oVdsCpjpHWIZYiMO' => 
+    'generated::Ws9Ld092VNSB23Aa' => 
     array (
       'methods' => 
       array (
@@ -1330,7 +1444,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::oVdsCpjpHWIZYiMO',
+        'as' => 'generated::Ws9Ld092VNSB23Aa',
       ),
       'fallback' => false,
       'defaults' => 

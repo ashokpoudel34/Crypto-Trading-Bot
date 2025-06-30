@@ -85,6 +85,9 @@ class SellCommand extends Command
                     } else {
                         $portfolio->save();
                     }
+                    // Update User Balance
+                    $user->balance += $valueUsd;
+                    $user->save();
 
                     // Update realized profits
                     $profitRow = RealizedPnl::firstOrNew(['user_id' => $user->id]);

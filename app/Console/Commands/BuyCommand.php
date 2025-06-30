@@ -49,12 +49,16 @@ echo "Total coins returned: " . count($allData) . "\n";
             }
             $currentPrice = $coin['current_price'];
 
-            if ($changePercentage <= -5) {
+            if ($changePercentage <= -5 && $user->balance >= 5) {
                 // Match CoinGecko ID to DB ID
                 $coinModel = $coins->firstWhere('coin_id', $coin['id']);
                 if (!$coinModel) continue;
 
                 $amount = 5 / $currentPrice;
+
+                 // Update User Balance
+                 $user->balance -= 5;
+                 $user->save();
 
                 Transaction::create([
                     'user_id' => $user->id,
@@ -99,6 +103,16 @@ $portfolio->save();
             ];
 
             }
+        else if ($user->balance < 5) {
+    // 1. Turn off auto trading
+    $user->auto_trade_enabled = false;
+    $user->save();
+
+    // 2. Send email to user
+    \Mail::to($user->email)->send(new \App\Mail\LowBalanceNotification($user));
+
+    break;
+}
         }
         if (!empty($purchases)) {
             $user->notify(new CoinPurchased($purchases));
