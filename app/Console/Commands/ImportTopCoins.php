@@ -20,14 +20,16 @@ public function handle()
 
     while (true) {
         try {
-            $response = Http::get('https://api.coingecko.com/api/v3/coins/markets', [
-                'vs_currency' => 'usd',
-                'order' => 'market_cap_desc',
-                'per_page' => 250,
-                'page' => $page,
-                'sparkline' => false,
-                'price_change_percentage' => '7d',
-            ]);
+        $response = Http::withHeaders([
+            'x-cg-pro-api-key' => env('COINGECKO_API_KEY'), // <-- set in your .env
+                ])->get('https://api.coingecko.com/api/v3/coins/markets', [
+            'vs_currency' => 'usd',
+            'order' => 'market_cap_desc',
+            'per_page' => 250,
+            'page' => $page,
+            'sparkline' => false,
+            'price_change_percentage' => '7d',
+        ]);
 
             // Handle rate limit
             if ($response->status() === 429) {
